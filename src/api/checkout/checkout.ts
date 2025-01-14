@@ -3,8 +3,8 @@ import { getAccessToken } from "../getAccessToken.js";
 import { getCart, getProductDataInCart } from "../Cart/getCart.js";
 import Cart from "@/components/BuyingProcess/Cart.vue";
 
-const access_token = await getAccessToken()
 export async function checkout(paymentStatus: String, products: string[], shippingid: string, shippingstatus: string, totalprice: number, uuid: string) {
+    const access_token = await getAccessToken();
     const url = 'https://techbox.developimpact.net/o/c/orderhistories/'
     const object = {
         "paymentStatus": paymentStatus,
@@ -28,6 +28,8 @@ export async function checkout(paymentStatus: String, products: string[], shippi
 }
 
 export async function getCheckout(userid) {
+    const access_token = await getAccessToken();
+
     const url = `https://techbox.developimpact.net/o/c/orderhistories/?filter=uuid%20eq%20%27${userid}%27`;
     const response = await fetch(url, {
         method: 'GET',
