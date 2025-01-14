@@ -58,7 +58,7 @@
 
       <!-- Footer -->
       <div class="mt-6 text-center">
-        <p class="text-sm text-gray-600">Thank you for your purchase!</p>
+        <p class="text-sm text-gray-600">Thank you for your purchases!</p>
         <p class="text-xs text-gray-500 mt-2">This is a computer-generated document and does not require a signature.</p>
       </div>
     </div>
