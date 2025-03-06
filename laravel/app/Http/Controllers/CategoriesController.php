@@ -11,7 +11,7 @@ class CategoriesController extends Controller
     public function getAllCategories()
     {
         $categories = Category::all();
-        return response()->json($categories, Response::HTTP_OK); // 200
+        return response()->json($categories, Response::HTTP_OK); 
     }
 
     public function createCategory(Request $request)
@@ -20,14 +20,14 @@ class CategoriesController extends Controller
             'name' => $request->name,
         ]);
 
-        return response()->json($category, Response::HTTP_CREATED); // 201
+        return response()->json($category, Response::HTTP_CREATED); 
     }
 
     public function getCategoryById($categoryId)
     {
         $category = Category::find($categoryId);
 
-        return response()->json($category, Response::HTTP_OK); // 200
+        return response()->json($category, Response::HTTP_OK);
     }
 
     public function updateCategoryById(Request $request, $categoryId)
@@ -35,14 +35,14 @@ class CategoriesController extends Controller
         $category = Category::find($categoryId);
 
         if (!$category) {
-            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND); // 404
+            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
         }
 
         $category->update([
             'name' => $request->name,
         ]);
 
-        return response()->json($category, Response::HTTP_OK); // 200
+        return response()->json($category, Response::HTTP_OK);
     }
 
     public function deleteCategoryById($categoryId)
@@ -50,11 +50,11 @@ class CategoriesController extends Controller
         $category = Category::find($categoryId);
 
         if (!$category) {
-            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND); // 404
+            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND); 
         }
 
         $category->delete();
 
-        return response()->json(['message' => 'Category deleted successfully'], Response::HTTP_OK); // 200
+        return response()->json(['message' => 'Category deleted successfully'], Response::HTTP_OK); 
     }
 }

@@ -1,65 +1,74 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
+use Symfony\Component\Mailer\Event\MessageEvent;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function getProductByCategoryID($categoryId){
+        $products = Product::where("category_id", $categoryId)->get();
+
+        if(!$products){
+            return response()->json(['message' => 'Not Found'], Response::HTTP_BAD_REQUEST);
+        }
+
+    
+        return response()->json($products,Response::HTTP_OK);
+    }
+    public function getAllProducts()
     {
-        return 'Hello Worldss';
+        $products = Product::all();
+        return response()->json($products, Response::HTTP_OK); 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function createProduct(Request $request)
     {
-        return 'Hi';
+        $product = Product::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'pricing' => $request->pricing,
+            'description' => $request->description,
+            'images' => $request->images
+        ]);
+
+        return response()->json($product, Response::HTTP_CREATED); 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function getProductById($productId)
     {
-        //
+        $product = Product::find($productId);
+
+        return response()->json($product, Response::HTTP_OK);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function updateProductById(Request $request, $productId)
     {
-        //
+        $product = Product::find($productId);
+
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $product->update([
+            'name' => $request->name,
+        ]);
+
+        return response()->json($product, Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function deleteProductById($productId)
     {
-        //
-    }
+        $product = Product::find($productId);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], Response::HTTP_NOT_FOUND); 
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $product->delete();
+
+        return response()->json(['message' => 'Product deleted successfully'], Response::HTTP_OK); 
     }
 }
